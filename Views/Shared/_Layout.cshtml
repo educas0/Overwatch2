@@ -1,0 +1,129 @@
+﻿@using Overwatch2.Models
+@using Microsoft.AspNetCore.Http
+@using System.Text.Json;
+@using Overwatch2.Models.Interfaces;
+@inject IControlSession _servicioSession
+@{
+
+    Cliente _clienteLogin = _servicioSession.RecuperaItemSession<Cliente>("datoscliente");
+
+
+    List<HeroeCarrito> _HeroesCarrito = new List<HeroeCarrito>();
+    try
+    {
+        _HeroesCarrito = JsonSerializer.Deserialize<List<HeroeCarrito>>(Context.Session.GetString("carrito"));
+    }
+    catch { }
+
+}
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Overwatch2</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+</head>
+<body>
+    <header>
+        <div class="col">
+            <div class="row">
+                <div class="col">
+                    <img src="~/images/cabecera.png">
+                </div>
+            </div>
+        </div>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+            <div class="container">
+                <a class="navbar-brand" asp-area="" asp-controller="Cliente" asp-action="Login">Overwatch 2</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+
+                <div class="col">
+
+
+                    <div class="row">
+                        <div class="col col-md">
+                            <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                                <ul class="navbar-nav flex-grow-1">
+                                    <li class="nav-item">
+                                        <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link text-dark" asp-area="" asp-controller="Cliente" asp-action="Registro">Registro</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link text-dark" asp-area="" asp-controller="Cliente" asp-action="ListadoClientes">Listado</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link text-dark" asp-area="" asp-controller="Cliente" asp-action="ActualizaCliente">Actualiza</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link text-dark" asp-area="" asp-controller="Cliente" asp-action="BorradoCliente">Borrado</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link text-dark" asp-area="" asp-controller="Heroe" asp-action="Index">HÉROES</a>
+                                    </li>
+                                </ul>
+                            </div>
+
+                        </div>
+
+
+                        @if (_HeroesCarrito != null && _HeroesCarrito.Count() > 0)
+                        {
+                            int cantidadH = 0;
+                            foreach (HeroeCarrito _heroe in _HeroesCarrito)
+                            {
+                                cantidadH += _heroe.Cantidad;
+                            }
+                            <div class="col col-md text-right" id="carrito">
+                                <p>@cantidadH heroes en el carro</p>
+                            </div>
+                        }
+
+                        @if (_clienteLogin != null)
+                        {
+                            <div class="col-2 col-md-2">
+                                <p>Bienvenido, <strong>@_clienteLogin.Apellido</strong></p>
+                            </div>
+                        }
+
+
+                    </div>
+                </div>
+
+            </div>
+        </nav>
+    </header>
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="border-top footer text-muted">
+        <div class="container">
+            &copy; 2023 - Overwatch2 - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+        </div>
+    </footer>
+    <script>
+        var carrito = null;
+
+    </script>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

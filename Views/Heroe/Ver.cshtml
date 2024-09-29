@@ -1,0 +1,30 @@
+﻿    @*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+<div class="container">
+
+    <table class="table table-dark">
+        <tr>
+            <th>Nombre</th>
+            <th>Rol</th>
+            <th>Daño</th>
+            <th>Vida</th>
+            <th>Cura</th>
+        </tr>
+        @foreach (Heroe _H in (List<Heroe>)ViewData["ListaHeroes"])
+        {
+            <tr>
+                <td>@_H.Nombre</td>
+                <td>@_H.Rol</td>
+                <td>@_H.Dano</td>
+                <td>@_H.Vida</td>
+                <td>@_H.Cura</td>
+                
+
+            </tr>
+        }
+        </table>
+
+</div>

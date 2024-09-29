@@ -1,0 +1,34 @@
+﻿@model Heroe
+
+<div class="card mb-3">
+    <div class="row g-0">
+        
+
+            <div class="col-md-4">
+                <img src="~/images/genericHero.jpg" class="card-img" />
+            
+                @*Formulario carrito*@
+                <form id="carritoHeroe-@Model.IdHeroe" method="post" asp-action="GuardarHeroeCarro" asp-controller="Heroe">
+                    <input type="submit" class="btn btn-primary" value="Añadir al Carrito" />
+                    <input type="number" asp-for="@Model.IdHeroe" hidden/>
+                </form>
+
+            </div>
+
+            <div class="col-md-8">
+                <div class="card-body">
+                    <h5 class="card-title">
+                        <a asp-controller="Tienda" asp-action="MostrarHeroe">
+                            @Model.Nombre
+                        </a>
+                    </h5>
+                    <p class="card-text">Nombre: @Model.Nombre</p>
+                    <p class="card-text">Rol: @Model.Rol</p>
+                    <p class="card-text">Vida: @Model.Vida</p>
+                    <p class="card-text">Daño: @Model.Dano</p>
+                    <p class="card-text">Cura: @Model.Cura</p>
+                </div>
+            </div>
+
+    </div>
+</div>

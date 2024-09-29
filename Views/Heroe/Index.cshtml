@@ -1,0 +1,126 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+
+@model Heroe
+
+
+
+@{
+    //List<Heroe> _heroes = devolverListaHeroes();
+
+}
+
+
+<div class="container">
+
+    <div>
+
+
+
+        <nav class="nav nav-pills nav-justified">
+            <a class="nav-item nav-link active" asp-controller="Heroe" asp-action="CrearHeroe">Crea Héroe</a>
+            <a class="nav-item nav-link" asp-controller="Heroe" asp-action="SeleccionarHeroe">Actualizar</a>
+            <a class="nav-item nav-link" asp-controller="Heroe" asp-action="BorrarHeroe">Borrar</a>
+            <a class="nav-item nav-link" asp-controller="Heroe" asp-action="DevolverHeroes">Listado</a>
+            <a class="nav-item nav-link disabled" asp-controller="Home" asp-action="Index">Disabled</a>
+        </nav>
+    </div>
+
+    <div>
+
+
+
+        @if (ViewData["listaHeroes"] != null && !string.IsNullOrEmpty(ViewData["listaHeroes"].ToString()))
+        {
+
+            @foreach (Heroe _heroe in (List<Heroe>)ViewData["listaHeroes"])
+            {
+                <partial name="_VistaParcialMiniHeroe" 
+                         model="_heroe"/>
+
+            }
+        }
+
+
+
+
+
+
+
+    </div>
+
+
+
+
+
+
+</div>
+
+
+
+
+<script>
+    function fnAgregar(IdHeroe, Nombre, Rol, Vida, Dano, Cura, Precio) {
+
+        if ($("#" + Cantidad).val() == null || $("#" + Cantidad).val() == "") {
+            alert('Ingrese Cantidad');
+            return;
+        }
+    }
+
+    var odata = {
+
+        "Producto": {
+            "IdHeroe": $("#" + IdHeroe.text()),
+            "Nombre": $("#" + Nombre.text()),
+            "Rol": $("#" + Rol.text()),
+            "Vida": $("#" + Vida.text()),
+            "Dano": $("#" + Dano.text()),
+            "Cura": $("#" + Cura.text()),
+            "Precio": $("#" + Precio.text()),
+        },
+        "Cantidad": $("#" + Cantidad).val()
+    };
+
+    $.ajax({
+        type: "POST",
+        url: "Pedido/Agregar",
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        data: JSON.stringify(odata),
+        success: function (d) {
+
+
+
+            if (type != undefined) {
+
+                tbody = "<tr>";
+                tbody = "<td>" + data[i].Heroe.IdHeroe + "</td>";
+                tbody = "<td>" + data[i].Heroe.Nombre + "</td>";
+                tbody = "<td>" + data[i].Heroe.Rol + "</td>";
+                tbody = "<td>" + data[i].Heroe.Vida + "</td>";
+                tbody = "<td>" + data[i].Heroe.Dano + "</td>";
+                tbody = "<td>" + data[i].Heroe.Cura + "</td>";
+                tbody = "<td>" + data[i].Heroe.Precio + "</td>";
+                tbody = "<td>" + data[i].Heroe.Cantidad + "</td>";
+                tbody = "</tr>";
+                $("#bodyPedido").append(tbody);
+
+
+            }
+
+
+
+
+            console.log(d);
+        },
+        error: function () {
+
+        }
+
+
+    });
+
+</script>

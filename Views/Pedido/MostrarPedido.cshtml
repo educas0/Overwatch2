@@ -1,0 +1,98 @@
+﻿@model Pedido
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Overwatch2</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+</head>
+<body>
+    <div>
+        <h3><b>RESUMEN DE LA CESTA:</b></h3>
+    </div>
+    <hr />
+
+    @if (! String.IsNullOrEmpty(TempData["ErrorServer"].ToString()))
+    {
+        <div>
+            <p><span style="color:red">@TempData["ErrorServer"].ToString()</span></p>
+        </div>
+    }
+
+
+    <div class="container">
+        @foreach (ItemPedido item in Model.ElementosPedido)
+        {
+            <div class="row">
+                <div class="col">
+                    <partial name="_VistaItemPedido" model="item" />
+                </div>
+            </div>
+        }
+
+        <hr />
+
+
+        <div class="row">
+            <div class="col-6"></div>
+            <div class="col-4">
+                <h4><strong>Total a pagar: </strong></h4>
+            </div>
+            <div class="col-2">
+                <h4><span style="color:red"><strong> @Model.TotalPedido €</strong></span></h4>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-6"></div>
+        <div class="col-3">
+            <!-- boton continuar comprando-->
+            <a asp-action="Libros"
+               asp-controller="Tienda"
+               class="btn btn-primary">
+                <img src="~/images/boton_SeguirComprando.png" />
+            </a>
+        </div>
+        <div class="col-3">
+            <!-- boton finalizar compra -->
+            <a asp-controller="Pedido"
+               asp-action="FinalizarPedido"
+               class="btn btn-primary">
+                <img src="~/images/boton_FinalizarCompra.png" />
+            </a>
+        </div>
+    </div>
+
+    <script>
+        function DeshabilitarBtnMenos() {
+            Array.from(document.getElementsByTagName("label"))
+                .filter((lab) => /^ISBN-/.test(lab.id))
+                .forEach(
+                    (lab) => {
+                        if (lab.innerText == '1') {
+                            //deshabilito boton - hermano
+                            lab.previousElementSibling.setAttribute("href", "javascript:void(0)");
+                        }
+                    }
+                );
+        }
+
+        //añado handler a evento click del boton - de cada itempedido para q compruebe
+        //si la cantidad es 1 o no para deshabilitarlo
+        Array.from(document.getElementsByTagName("a"))
+            .filter((ahref) => /^botonMenos-/.test(ahref.id))
+            .forEach(
+                    (ahref)=> ahref.addEventListener("click",DeshabilitarBtnMenos)
+            );
+
+
+
+    </script>
+</body>
+</html>

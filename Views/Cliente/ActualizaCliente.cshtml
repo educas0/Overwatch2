@@ -1,0 +1,26 @@
+﻿@model Cliente;
+@{
+    
+}
+
+
+<div class="container">
+    <div class="col">
+
+       
+        <div class="row">
+
+
+            <form method="post" asp-controller="Cliente" asp-action="actualizaCliente">
+                <h1> Selecciona cliente a actualizar</h1>
+                <select class="form-control" asp-for="@Model.Nickname">
+                    @foreach (Cliente _cliente in (List<Cliente>)ViewData["listaClientes"]) {
+                        <option value="@_cliente.Nickname">"@_cliente.Nickname"</option>
+                    }
+                </select>
+                <br />
+                <input type="submit" class="btn btn-primary" value="Actualizar"/>
+            </form>
+        </div>
+    </div>
+</div>

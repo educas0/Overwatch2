@@ -1,0 +1,71 @@
+﻿
+
+@model Cliente;
+
+
+
+<div class="text-center">
+
+
+
+    <div class="row">
+        <div class="col">
+            <h3><strong>Acceso a Overwatch2.com</strong></h3>
+            <p>Para poder disfrutar de algunos de nuestros servicios, debes estar registrado. Registrarse en Overwatch2.com es rápido, fácil y GRATIS!</p>
+        </div>
+    </div>
+
+    <div class="row">
+
+
+
+        <div class="col">
+
+            <div class="col">
+                <p><h3>Identificate...</h3></p><br />
+                <small>Si no te loggeas no podrás comprar, si no puedes comprar no podrás ser feliz :(</small>
+            </div>
+
+            @if (ViewData["error"] != null && !string.IsNullOrEmpty(ViewData["error"].ToString()))
+            {
+                <div class="row">
+                    <div class="col">
+                        <label class="alert-danger">@ViewData["error"]</label>
+                    </div>
+                </div>
+            }
+                
+
+
+           
+
+            
+            <form id="formlogin" method="post" asp-controller="Cliente" asp-action="Login">
+
+                <div class="form-group">
+                    <label for="nick"><strong>Nickname</strong></label>
+                    <input type="text" class="form-control" asp-for="@Model.Nickname" placeholder="Introduce tu Nickname" />
+                </div>
+
+                <div class="form-group">
+                    <label for="password"><strong>Password</strong></label>
+                    <input type="password" class="form-control" asp-for="@Model.Password" placeholder="Introduce tu Password" />
+                </div>
+
+
+                <input type="submit" class="btn btn-primary" value="Entrar" />
+
+            </form>
+
+            @*<div class="row">
+            <form id="formlogin2" method="get" asp-controller="Home" asp-action="Pagina2">
+                <input type="submit" value="Ir a página 2"/>
+            </form>
+
+        </div>*@
+        </div>
+
+    </div>
+
+
+</div>

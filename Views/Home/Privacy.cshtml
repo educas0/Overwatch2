@@ -1,0 +1,16 @@
+﻿@{
+    ViewData["Title"] = "Privacy Policy";
+}
+<h1>@ViewData["Title"]</h1>
+
+<p>Use this page to detail your site's privacy policy.</p>
+
+@if (ViewData["error"] != null && !string.IsNullOrEmpty(ViewData["error"].ToString()))
+{
+    <div class="row">
+        <div class="col">
+            <label class="alert-danger">@ViewData["error"]</label>
+        </div>
+    </div>
+}
+
